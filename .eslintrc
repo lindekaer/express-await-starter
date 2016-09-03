@@ -1,0 +1,26 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "APP": true
+  },
+  "rules": {
+    "func-names": "off",
+    "space-before-function-paren": ["error", "never"],
+    "max-len": ["error", 120, 4],
+    "no-unused-vars": ["error", {"argsIgnorePattern": "next"}],
+    "comma-dangle": "off",
+    "no-use-before-define": "off",
+    "object-shorthand": "off",
+    "new-cap": "off",
+    "newline-per-chained-call": "off",
+    "no-param-reassign": "off",
+    "no-return-assign": "off",
+    "no-else-return": "off",
+    "arrow-body-style": "off",
+    "import/prefer-default-export": "off"
+  }
+}

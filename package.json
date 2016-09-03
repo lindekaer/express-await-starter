@@ -1,0 +1,39 @@
+{
+  "name": "express-await-starter",
+  "version": "1.0.0",
+  "description": "A simple starter project to get up and running with Express and ES7 await",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "es7",
+    "await",
+    "async"
+  ],
+  "author": "Theodor C. Listov Lindekaer <theodor.lindekaer@gmail.com> (https://lindekaer.github.io)",
+  "license": "MIT",
+  "dependencies": {
+    "babel-core": "6.14.0",
+    "babel-preset-es2015-node": "6.1.1",
+    "babel-preset-stage-0": "6.5.0",
+    "body-parser": "1.15.2",
+    "express": "4.14.0",
+    "pug": "2.0.0-beta6"
+  },
+  "babel": {
+    "presets": [
+      "es2015-node",
+      "stage-0"
+    ]
+  },
+  "devDependencies": {
+    "babel-eslint": "6.1.2",
+    "eslint": "3.4.0",
+    "eslint-config-airbnb": "10.0.1",
+    "eslint-plugin-import": "1.14.0",
+    "eslint-plugin-jsx-a11y": "2.2.1",
+    "eslint-plugin-react": "6.2.0"
+  }
+}
