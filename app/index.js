@@ -1,15 +1,17 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import chalk from 'chalk';
+import config from '../config';
 import { asyncRequest } from './utils/helpers';
 
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || config.port;
 const mode = process.env.NODE_ENV || 'development';
-const pathStaticFiles = '../public';
-const pathViews = './views';
+const pathStaticFiles = config.path.staticFiles;
+const pathViews = config.path.views;
 
 const app = express();
 app.listen(port, () => {
-  console.log(`\n ⚡️ Server running in ${mode} on port ${port} ⚡️ \n`);
+  console.log(`\n ⚡️ Server running in ${chalk.green(mode)} on port ${chalk.yellow(port)} ⚡️ \n`);
 });
 
 app.set('view engine', 'pug');
@@ -36,3 +38,13 @@ function fetchUsers() {
     }, 2000);
   });
 }
+
+// Catch unhandled errors
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.send(500);
+});
+
+// Catch of exceptions
+process.on('uncaughtException', err => console.log(err));
+process.on('unhandledRejection', err => console.log(err));
