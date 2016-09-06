@@ -1,7 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import config from '../config';
 import { asyncRequest } from './utils/helpers';
+import { networkLogger, appLogger as logger } from './setup/logger';
 
 const pathStaticFiles = config.path.staticFiles;
 const pathViews = config.path.views;
@@ -11,6 +13,7 @@ app.set('view engine', 'pug');
 app.set('views', pathViews);
 app.use('/', express.static(pathStaticFiles));
 app.use(bodyParser.json());
+app.use(morgan('combined', { stream: networkLogger.stream }));
 
 app.get('/users', asyncRequest(async (req, res) => {
   const users = await fetchUsers();
@@ -34,8 +37,8 @@ function fetchUsers() {
 
 // Catch unhandled errors
 app.use((err, req, res, next) => {
-  console.log(err);
-  res.send(500);
+  logger.error('Error caught in Express middleware', err);
+  res.sendStatus(500);
 });
 
 /*

@@ -1,4 +1,5 @@
 const config = {
+  name: 'express-starter',
   port: 9000,
   path: {
     views: './views',
