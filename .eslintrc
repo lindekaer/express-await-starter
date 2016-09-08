@@ -5,9 +5,6 @@
     "node": true,
     "es6": true
   },
-  "globals": {
-    "APP": true
-  },
   "rules": {
     "object-curly-spacing": ["error", "always"],
     "require-jsdoc": "off",

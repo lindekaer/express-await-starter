@@ -1,7 +1,7 @@
 const config = {
   name: 'express-starter',
   port: 9000,
-  path: {
+  paths: {
     views: './views',
     staticFiles: '../public'
   }
