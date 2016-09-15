@@ -1,10 +1,6 @@
 const config = {
   name: 'express-starter',
-  port: 9000,
-  paths: {
-    views: './views',
-    staticFiles: '../public'
-  }
+  port: 9000
 };
 
 export default config;

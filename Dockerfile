@@ -26,8 +26,5 @@ WORKDIR $HOME/app
 # Install all Node modules
 RUN npm install
 
-# Copy all the application files to the
-COPY . $HOME/app
-
 # Launch the application
 CMD ["node", "server.js"]

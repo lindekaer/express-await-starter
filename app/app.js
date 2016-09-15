@@ -7,9 +7,9 @@
 */
 
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
-import config from '../config';
 import { asyncRequest } from './utils/helpers';
 import { networkLogger, appLogger as logger } from './setup/logger';
 
@@ -21,16 +21,18 @@ import { networkLogger, appLogger as logger } from './setup/logger';
 -----------------------------------------------------------------------------------
 */
 
-const pathStaticFiles = config.paths.staticFiles;
-const pathViews = config.paths.views;
 const loggingSetting = process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
 const app = express();
 
 app.set('view engine', 'pug');
-app.set('views', pathViews);
-app.use('/', express.static(pathStaticFiles));
+app.set('views', path.join(__dirname, 'views'));
+app.use('/', express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
 app.use(morgan(loggingSetting, { stream: networkLogger.stream }));
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
 
 app.get('/users', asyncRequest(async (req, res) => {
   const users = await fetchUsers();
