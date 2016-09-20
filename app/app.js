@@ -10,8 +10,11 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import compression from 'compression';
+import helmet from 'helmet';
 import { asyncRequest } from './utils/helpers';
 import { networkLogger, appLogger as logger } from './setup/logger';
+import config from '../config';
 
 /*
 -----------------------------------------------------------------------------------
@@ -21,13 +24,46 @@ import { networkLogger, appLogger as logger } from './setup/logger';
 -----------------------------------------------------------------------------------
 */
 
-const loggingSetting = process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
 const app = express();
 
+// The title of the application
+app.set('title', config.name);
+
+// Remove the 'powered by Express'
+app.set('x-powered-by', null);
+
+// Set application in appropriate mode
+app.set('env', process.env.NODE_ENV);
+
+// Now /foo is not equal to /foo/
+app.set('strict routing', true);
+
+// Now /Wakies is not equal to /wakies
+app.set('case sensitive routing', true);
+
+// JSON returned is indented with spaces
+app.set('json spaces', 2);
+
+// Render templates using Pug
 app.set('view engine', 'pug');
+
+// Specifiy path to templates
 app.set('views', path.join(__dirname, 'views'));
-app.use('/', express.static(path.join(__dirname, '..', 'public')));
+
+// JSON is parsed and places in req.body
 app.use(bodyParser.json());
+
+// Compress response bodies
+app.use(compression());
+
+// Helps to secure the app with various HTTP headers
+app.use(helmet());
+
+// Mount a folder to host public, static files
+app.use('/', express.static(path.join(__dirname, '..', 'public')));
+
+// Log all incoming network requests
+const loggingSetting = process.env.NODE_ENV === 'production' ? 'combined' : 'dev';
 app.use(morgan(loggingSetting, { stream: networkLogger.stream }));
 
 app.get('/', (req, res) => {
