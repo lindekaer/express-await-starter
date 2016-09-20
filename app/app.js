@@ -38,7 +38,7 @@ app.set('env', process.env.NODE_ENV);
 // Now /foo is not equal to /foo/
 app.set('strict routing', true);
 
-// Now /Wakies is not equal to /wakies
+// Now /Bar is not equal to /bar
 app.set('case sensitive routing', true);
 
 // JSON returned is indented with spaces
