@@ -1,16 +1,31 @@
-import chalk from 'chalk';
-import app from './app';
-import config from '../config';
-import { appLogger as logger } from './setup/logger';
+/*
+-----------------------------------------------------------------------------------
+|
+| Imports
+|
+-----------------------------------------------------------------------------------
+*/
 
-const port = process.env.PORT || config.port;
-const mode = process.env.NODE_ENV || 'development';
+import app from './app'
+import { connectDatabase } from './setup/db'
 
-// Start application
-app.listen(port, () => {
-  console.log(`\n ⚡️ Server running in ${chalk.green(mode)} on port ${chalk.yellow(port)} ⚡️ \n`);
-});
+/*
+-----------------------------------------------------------------------------------
+|
+| Launch application 🚀
+|
+-----------------------------------------------------------------------------------
+*/
 
-// Catch of exceptions
-process.on('uncaughtException', err => logger.error('Uncaught exception', err));
-process.on('unhandledRejection', err => logger.error('Unhandled rejection', err));
+const port = process.env.PORT || config.port
+const mode = process.env.NODE_ENV || 'development'
+
+// Connect to database
+connectDatabase(() => {
+  // Provision the application and start listening on a port
+  app.start(port, mode)
+})
+
+// TODO: Implement these errorhandlers, fx to send an email alert
+process.on('uncaughtException', err => { console.log(err); process.exit() })
+process.on('unhandledRejection', err => { console.log(err); process.exit() })

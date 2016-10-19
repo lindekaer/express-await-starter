@@ -1,9 +1,0 @@
-app:
-  container_name: express-server
-  mem_limit: 300m
-  memswap_limit: 1g
-  build: .
-  volumes:
-    - .:/home/nodejs/app
-  ports:
-    - '9000:9000'

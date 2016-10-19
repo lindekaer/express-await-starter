@@ -1,5 +1,5 @@
-# Base Node image of version 6.0
-FROM node:6.0
+# Base Node image of version 6.5
+FROM node:6.5
 
 # Create a new user to run our Node process
 RUN useradd --user-group --create-home --shell /bin/false nodejs

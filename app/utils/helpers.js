@@ -1,6 +1,13 @@
-export const asyncRequest = (handler) =>
-  (req, res) => {
-    handler(req, res).catch(e =>
-      res.status(400).send({ error: e.toString() })
-    );
-  };
+/*
+-----------------------------------------------------------------------------------
+|
+| Helper functions
+|
+-----------------------------------------------------------------------------------
+*/
+
+export const asyncRequest = (handler) => {
+  return (req, res, next) => {
+    return handler(req, res, next).catch(next)
+  }
+}

@@ -4,6 +4,7 @@
   "description": "A simple starter project to get up and running with Express and ES7 await",
   "main": "server.js",
   "scripts": {
+    "dev": "NODE_ENV=development nodemon server.js",
     "start": "NODE_ENV=production node server.js"
   },
   "keywords": [
@@ -12,28 +13,38 @@
     "await",
     "async"
   ],
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "strings",
+      "config"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015-node",
+      "stage-0"
+    ]
+  },
   "author": "Theodor C. Listov Lindekaer <theodor.lindekaer@gmail.com> (https://lindekaer.github.io)",
   "license": "MIT",
   "dependencies": {
     "babel-core": "6.14.0",
-    "babel-plugin-transform-flow-strip-types": "6.14.0",
+    "babel-eslint": "6.1.2",
     "babel-preset-es2015-node": "6.1.1",
     "babel-preset-stage-0": "6.5.0",
     "body-parser": "1.15.2",
-    "bunyan": "1.8.1",
     "chalk": "1.1.3",
     "compression": "1.6.2",
     "express": "4.14.0",
     "helmet": "2.2.0",
     "moment": "2.14.1",
     "morgan": "1.7.0",
-    "pino": "2.9.0",
-    "pug": "2.0.0-beta6",
+    "noop-logger": "0.1.1",
     "winston": "2.2.0"
   },
   "devDependencies": {
-    "babel-eslint": "6.1.2",
-    "eslint": "3.4.0",
-    "eslint-config-google": "0.6.0"
+    "nodemon": "1.11.0",
+    "standard": "8.4.0"
   }
 }
