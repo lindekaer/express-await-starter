@@ -12,6 +12,7 @@ import bodyParser from 'body-parser'
 import morgan from 'morgan'
 import compression from 'compression'
 import helmet from 'helmet'
+import cors from 'cors'
 import { networkLogger, appLogger as logger } from './setup/logger'
 import { setupApiRoutes } from './routes'
 
@@ -43,6 +44,7 @@ function provisionApp () {
   app.use(bodyParser.json())              // JSON is parsed and places in req.body
   app.use(compression())                  // Compress response bodies
   app.use(helmet())                       // Helps to secure the app with various HTTP headers
+  app.use(cors())                         // Enable CORS
 
   // Add field to determine if running in production
   app.isProd = process.env.NODE_ENV === 'production'
