@@ -28,32 +28,30 @@ const app = express()
 
 // Extend the app with a custom start function
 app.start = (port, mode) => {
-  provisionApp()
+  provisionApp(mode)
   app.listen(port, () => {
     logger.info(`⚡️ Server running in ${chalk.green(mode)} on port ${chalk.yellow(port)} ⚡️`)
   })
 }
 
-function provisionApp () {
+function provisionApp (mode) {
   app.set('title', config.name)           // The title of the application
   app.set('x-powered-by', null)           // Remove the 'powered by Express'
-  app.set('env', process.env.NODE_ENV)    // Set application in appropriate mode
+  app.set('env', mode)                    // Set application in appropriate mode
   app.set('strict routing', true)         // Now /foo is not equal to /foo/
-  app.set('case sensitive routing', true) // Now /Wakies is not equal to /wakies
+  app.set('case sensitive routing', true) // Now /Users is not equal to /users
   app.set('json spaces', 2)               // JSON returned is indented with spaces
   app.use(bodyParser.json())              // JSON is parsed and places in req.body
   app.use(compression())                  // Compress response bodies
   app.use(helmet())                       // Helps to secure the app with various HTTP headers
   app.use(cors())                         // Enable CORS
 
-  // Add field to determine if running in production
-  app.isProd = process.env.NODE_ENV === 'production'
+  // Determine if running in production
+  app.isProd = mode === 'production'
 
   // Log all network requests
-  if (process.env.NODE_ENV !== 'test') {
-    const loggingSetting = app.isProd ? 'combined' : 'dev'
-    app.use(morgan(loggingSetting, { stream: networkLogger.stream }))
-  }
+  const loggingSetting = app.isProd ? 'combined' : 'dev'
+  app.use(morgan(loggingSetting, { stream: networkLogger.stream }))
 
   // Add route-handling to application
   setupApiRoutes(app)
