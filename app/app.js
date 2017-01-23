@@ -13,7 +13,7 @@ import morgan from 'morgan'
 import compression from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
-import { networkLogger, appLogger as logger } from './setup/logger'
+import { networkLogger } from './setup/logger'
 import { setupApiRoutes } from './routes'
 
 /*
@@ -30,7 +30,7 @@ const app = express()
 app.start = (port, mode) => {
   provisionApp(mode)
   app.listen(port, () => {
-    logger.info(`⚡️ Server running in ${chalk.green(mode)} on port ${chalk.yellow(port)} ⚡️`)
+    console.log(`⚡️ Server running in ${chalk.green(mode)} on port ${chalk.yellow(port)} with PID ${chalk.yellow(process.pid)}⚡️`)
   })
 }
 
@@ -46,11 +46,8 @@ function provisionApp (mode) {
   app.use(helmet())                       // Helps to secure the app with various HTTP headers
   app.use(cors())                         // Enable CORS
 
-  // Determine if running in production
-  app.isProd = mode === 'production'
-
   // Log all network requests
-  const loggingSetting = app.isProd ? 'combined' : 'dev'
+  const loggingSetting = mode === 'production' ? 'combined' : 'dev'
   app.use(morgan(loggingSetting, { stream: networkLogger.stream }))
 
   // Add route-handling to application

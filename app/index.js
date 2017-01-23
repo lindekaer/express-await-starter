@@ -18,15 +18,7 @@ import { connectDatabase } from './setup/db'
 */
 
 const port = process.env.PORT || config.port
-const mode = process.env.NODE_ENV
-
-// Check for valid application modes
-if (mode !== 'development' || mode !== 'production' || mode !== 'test') {
-  console.log('\nPlease run the application with one of the following allowed NODE_ENV:')
-  console.log('(development | production | test)')
-  console.log('For example, NODE_ENV=development node server.js\n')
-  process.exit()
-}
+const mode = process.env.NODE_ENV || 'development'
 
 // Connect to database
 connectDatabase(() => {
