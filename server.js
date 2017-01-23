@@ -1,3 +1,11 @@
+/*
+-----------------------------------------------------------------------------------
+|
+| Global setup
+|
+-----------------------------------------------------------------------------------
+*/
+
 // Use the Babel transpiler to use modern Javascript
 require('babel-core/register')
 
@@ -5,8 +13,24 @@ require('babel-core/register')
 global.config = require('./config').default
 global.strings = require('./app/utils/strings')
 
+/*
+-----------------------------------------------------------------------------------
+|
+| Imports
+|
+-----------------------------------------------------------------------------------
+*/
+
 const cluster = require('cluster')
 const os = require('os')
+
+/*
+-----------------------------------------------------------------------------------
+|
+| Clustering and application bootstrapping
+|
+-----------------------------------------------------------------------------------
+*/
 
 if (cluster.isMaster) {
   // Get number of CPUs

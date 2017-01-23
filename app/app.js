@@ -56,7 +56,11 @@ function provisionApp (mode) {
   // Add error handler to application
   app.use((err, req, res, next) => {
     console.log(err)
-    res.status(500).send(strings.ERROR)
+    if (err.isJoi) {
+      res.status(400).json(err.details.map(e => ({ field: e.path, message: e.message })))
+    } else {
+      res.status(500).send(strings.ERROR)
+    }
   })
 }
 

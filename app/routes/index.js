@@ -26,7 +26,7 @@ function setupApiRoutes (app) {
   })
 
   // Require Basic Auth for all API requests
-  // apiRouter.use(basicAuthMiddleware)
+  apiRouter.use(basicAuthMiddleware)
 
   /* eslint-disable */
   apiRouter.post('/users', validate('users', 'create'), usersHandler.create)
